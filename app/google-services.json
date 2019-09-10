@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "260905547152",
+    "firebase_url": "https://g8shoppingapp.firebaseio.com",
+    "project_id": "g8shoppingapp",
+    "storage_bucket": "g8shoppingapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:260905547152:android:66b6b1ff9919faff",
+        "android_client_info": {
+          "package_name": "au.edu.uts.ss1a.g8shoppingapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "260905547152-kjar0lrb1ue5pvc69jbusbpr46m93us4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "au.edu.uts.ss1a.g8shoppingapp",
+            "certificate_hash": "497ec8e50de219418e30bdbd6acdc1e3f473f27b"
+          }
+        },
+        {
+          "client_id": "260905547152-id6eh4458p5hptcfl4a0ect2qqgk6oo2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQFrh6NjYcMY8NRvyTBEyp6dUVOfkHpXk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "260905547152-id6eh4458p5hptcfl4a0ect2qqgk6oo2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
