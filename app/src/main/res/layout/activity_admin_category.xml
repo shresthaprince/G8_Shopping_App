@@ -46,51 +46,12 @@
             android:src="@drawable/usb" />
     </LinearLayout>
 
+
     <LinearLayout
         android:id="@+id/linear2_admin_category"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linear1_admin_category"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="45dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/console1"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:src="@drawable/console" />
-
-        <ImageView
-            android:id="@+id/headphones1"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/headphones" />
-
-        <ImageView
-            android:id="@+id/router1"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/router" />
-
-        <ImageView
-            android:id="@+id/tablet1"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginStart="10dp"
-            android:src="@drawable/tablet" />
-    </LinearLayout>
-
-
-
-    <LinearLayout
-        android:id="@+id/linear3_admin_category"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/linear2_admin_category"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="45dp"
         android:gravity="center"
