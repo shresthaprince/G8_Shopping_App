@@ -19,7 +19,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import au.edu.uts.ss1a.g8shoppingapp.CurrentModel.CurrentModel;
 import au.edu.uts.ss1a.g8shoppingapp.Model.Customers;
+import io.paperdb.Paper;
 
 @SuppressWarnings("deprecation")
 public class LoginActivity extends AppCompatActivity {
@@ -44,6 +46,8 @@ public class LoginActivity extends AppCompatActivity {
         UserPageLink1 = (TextView) findViewById(R.id.user_page_link1);
         UserPageLink2 = (TextView) findViewById(R.id.user_page_link2);
         dialogBox = new ProgressDialog(this);
+
+        Paper.init(this);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +123,9 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void login(final String phnumber, final String password) {
+
+        Paper.book().write(CurrentModel.userPhoneNumber, phnumber);
+        Paper.book().write(CurrentModel.userPassword, password);
         final DatabaseReference RootRef;
         RootRef = FirebaseDatabase.getInstance().getReference();
 
@@ -140,7 +147,8 @@ public class LoginActivity extends AppCompatActivity {
                                 Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                 dialogBox.dismiss();
 
-                                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                Intent intent = new Intent(LoginActivity.this, UserHomeActivity.class);
+                                CurrentModel.currentUser = userData;
                                 startActivity(intent);
                             }
                         } else {
