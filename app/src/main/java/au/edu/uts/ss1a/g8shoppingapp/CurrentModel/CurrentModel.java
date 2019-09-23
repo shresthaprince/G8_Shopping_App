@@ -4,5 +4,8 @@ import au.edu.uts.ss1a.g8shoppingapp.Model.Customers;
 
 public class CurrentModel {
 
-    private static Customers currentUser;
+    public static Customers currentUser;
+
+    public static final String userPhoneNumber = "UserPhoneNumber";
+    public static final String userPassword = "UserPassword";
 }

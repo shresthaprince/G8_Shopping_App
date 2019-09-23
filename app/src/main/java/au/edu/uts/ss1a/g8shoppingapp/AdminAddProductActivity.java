@@ -109,30 +109,30 @@ public class AdminAddProductActivity extends AppCompatActivity {
 
         productID = saveCurrentDate + saveCurrentTime;
 
-        final StorageReference filePath = productImageRef.child(imageUri.getLastPathSegment() + productID);
+        final StorageReference filePath = productImageRef.child(imageUri.getLastPathSegment() + productID + ".jpg");
 
         final UploadTask uploadTask = filePath.putFile(imageUri);
+
 
         uploadTask.addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
-                String msg = e.toString();
-                Toast.makeText(AdminAddProductActivity.this, "Error:" + msg, Toast.LENGTH_SHORT).show();
+                String message = e.toString();
+                Toast.makeText(AdminAddProductActivity.this, "Error: " + message, Toast.LENGTH_SHORT).show();
                 dialogBox.dismiss();
             }
         }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                Toast.makeText(AdminAddProductActivity.this, "Image uploaded successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AdminAddProductActivity.this, "Product Image uploaded Successfully...", Toast.LENGTH_SHORT).show();
 
                 Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
                     @Override
                     public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                         if (!task.isSuccessful()) {
-                            dialogBox.dismiss();
                             throw task.getException();
-
                         }
+
                         downloadImageUrl = filePath.getDownloadUrl().toString();
                         return filePath.getDownloadUrl();
                     }
@@ -140,7 +140,9 @@ public class AdminAddProductActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<Uri> task) {
                         if (task.isSuccessful()) {
-                            Toast.makeText(AdminAddProductActivity.this, "Got product image url", Toast.LENGTH_SHORT).show();
+                            downloadImageUrl = task.getResult().toString();
+
+                            Toast.makeText(AdminAddProductActivity.this, "got the Product image Url Successfully...", Toast.LENGTH_SHORT).show();
 
                             saveProductInfo();
                         }

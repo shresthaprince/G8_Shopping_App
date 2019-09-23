@@ -1,17 +1,17 @@
 package au.edu.uts.ss1a.g8shoppingapp.Model;
 
 public class Customers {
-    private String name, password, phonenumber;
+    private String name, password, phonenumber, image;
 
     public Customers(){
 
     }
 
-    public Customers(String name, String password, String phonenumber) {
+    public Customers(String name, String password, String phonenumber, String image) {
         this.name = name;
         this.password = password;
         this.phonenumber = phonenumber;
-
+        this.image = image;
     }
 
     public String getName() {
@@ -36,5 +36,13 @@ public class Customers {
 
     public void setPhonenumber(String phonenumber) {
         this.phonenumber = phonenumber;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }
