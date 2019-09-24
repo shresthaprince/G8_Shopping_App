@@ -15,7 +15,7 @@
             android:id="@+id/toolbar_all_products"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary"
+            android:background="@color/colorPrimaryDark"
             android:elevation="4dp"
             android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
@@ -44,7 +44,8 @@
             android:id="@+id/recycler_menu"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical">
+            android:scrollbars="vertical"
+            android:layout_marginBottom="10dp">
 
         </androidx.recyclerview.widget.RecyclerView>
 
