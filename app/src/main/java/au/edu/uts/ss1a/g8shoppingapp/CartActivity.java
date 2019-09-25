@@ -34,6 +34,7 @@ public class CartActivity extends AppCompatActivity {
     private Button nextBtn;
 
     private int totalPrice = 0;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,12 +102,22 @@ public class CartActivity extends AppCompatActivity {
                                             startActivity(intent);
 
                                         } else if (i == 1) {
+
                                             cartListRef.child("User View").child(CurrentModel.currentUser.getPhonenumber()).child("Products").child(cart.getProdID())
                                                     .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
                                                 @Override
                                                 public void onComplete(@NonNull Task<Void> task) {
                                                     if (task.isSuccessful()) {
-                                                        Toast.makeText(CartActivity.this, "Product removed from cart", Toast.LENGTH_SHORT).show();
+                                                        cartListRef.child("Admin View").child(CurrentModel.currentUser.getPhonenumber()).child("Products").child(cart.getProdID())
+                                                                .removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                if (task.isSuccessful()) {
+                                                                    Toast.makeText(CartActivity.this, "Product removed from cart", Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            }
+                                                        });
+
                                                     }
                                                 }
                                             });

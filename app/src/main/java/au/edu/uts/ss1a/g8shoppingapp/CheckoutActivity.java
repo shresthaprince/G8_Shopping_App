@@ -102,7 +102,7 @@ public class CheckoutActivity extends AppCompatActivity {
         ordersMap.put("userAddressStreet", addressStreetEditText.getText().toString());
         ordersMap.put("userAddressCity", addressCityEditText.getText().toString());
         ordersMap.put("userAddressPostcode", addressPostcodeEditText.getText().toString());
-        ordersMap.put("dare", saveCurrentDate);
+        ordersMap.put("date", saveCurrentDate);
         ordersMap.put("time", saveCurrentTime);
         ordersMap.put("tracker", "Not Shipped");
 
