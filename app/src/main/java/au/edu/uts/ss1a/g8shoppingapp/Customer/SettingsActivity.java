@@ -1,24 +1,14 @@
-package au.edu.uts.ss1a.g8shoppingapp;
+package au.edu.uts.ss1a.g8shoppingapp.Customer;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.storage.StorageReference;
-import com.squareup.picasso.Picasso;
-
-import au.edu.uts.ss1a.g8shoppingapp.CurrentModel.CurrentModel;
+import au.edu.uts.ss1a.g8shoppingapp.R;
 
 public class SettingsActivity extends AppCompatActivity {
 

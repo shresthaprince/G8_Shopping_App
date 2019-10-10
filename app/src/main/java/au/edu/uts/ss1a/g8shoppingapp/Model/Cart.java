@@ -1,7 +1,7 @@
 package au.edu.uts.ss1a.g8shoppingapp.Model;
 
 public class Cart {
-    private String prodID, prodName, prodPrice, prodQuantity, prodDesc;
+    private String prodID, prodName, prodPrice, prodQuantity, prodDesc, branchID;
 
     public String getProdID() {
         return prodID;
@@ -43,15 +43,24 @@ public class Cart {
         this.prodDesc = prodDesc;
     }
 
+    public String getBranchID() {
+        return branchID;
+    }
+
+    public void setBranchID(String branchID) {
+        this.branchID = branchID;
+    }
+
     public Cart() {
 
     }
 
-    public Cart(String prodID, String prodName, String prodPrice, String prodQuantity, String prodDesc) {
+    public Cart(String prodID, String prodName, String prodPrice, String prodQuantity, String prodDesc, String branchID) {
         this.prodID = prodID;
         this.prodName = prodName;
         this.prodPrice = prodPrice;
         this.prodQuantity = prodQuantity;
         this.prodDesc = prodDesc;
+        this.branchID = branchID;
     }
 }

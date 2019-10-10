@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".AdminCategoryActivity">
+    tools:context=".Admin.AdminCategoryActivity">
 
 
     <LinearLayout
@@ -46,6 +46,31 @@
             android:src="@drawable/usb" />
     </LinearLayout>
 
+    <Button
+        android:id="@+id/admin_manage_branches"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_rectangle"
+        android:layout_above="@+id/admin_manage_products"
+        android:layout_margin="20dp"
+        android:text="Manage Branches"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textAllCaps="false" />
+
+    <Button
+        android:id="@+id/admin_manage_products"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_rectangle"
+        android:layout_above="@+id/admin_check_order_btn"
+        android:layout_margin="20dp"
+        android:text="Manage Products"
+        android:textAlignment="center"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:textAllCaps="false" />
 
     <Button
         android:id="@+id/admin_check_order_btn"
@@ -120,6 +145,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
+        android:textColor="@color/colorPrimaryDark"
         android:text="Add New Product"
         android:textAlignment="center"
         android:textSize="26sp"

@@ -1,4 +1,4 @@
-package au.edu.uts.ss1a.g8shoppingapp;
+package au.edu.uts.ss1a.g8shoppingapp.Customer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,6 +19,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import au.edu.uts.ss1a.g8shoppingapp.CurrentModel.CurrentModel;
 import au.edu.uts.ss1a.g8shoppingapp.Model.Customers;
+import au.edu.uts.ss1a.g8shoppingapp.R;
 import io.paperdb.Paper;
 
 @SuppressWarnings("deprecation")

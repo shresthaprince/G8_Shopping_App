@@ -1,4 +1,4 @@
-package au.edu.uts.ss1a.g8shoppingapp;
+package au.edu.uts.ss1a.g8shoppingapp.Customer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -13,18 +13,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseError;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import au.edu.uts.ss1a.g8shoppingapp.CurrentModel.CurrentModel;
 import au.edu.uts.ss1a.g8shoppingapp.Model.Cart;
+import au.edu.uts.ss1a.g8shoppingapp.R;
 import au.edu.uts.ss1a.g8shoppingapp.ViewHolder.CartViewHolder;
 
 public class CartActivity extends AppCompatActivity {
@@ -32,6 +35,7 @@ public class CartActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private RecyclerView.LayoutManager layoutManager;
     private Button nextBtn;
+    private String branchID;
 
     private int totalPrice = 0;
 
@@ -80,6 +84,8 @@ public class CartActivity extends AppCompatActivity {
                         cartViewHolder.productPriceTxt.setText("Price: $" + cart.getProdPrice());
                         cartViewHolder.productQuantityTxt.setText("Quantity: " + cart.getProdQuantity());
 
+                        branchID = cart.getBranchID();
+
                         int individualTotalPrice = ((Integer.valueOf(cart.getProdPrice()))) * ((Integer.valueOf(cart.getProdQuantity())));
                         totalPrice += individualTotalPrice;
 
@@ -98,7 +104,10 @@ public class CartActivity extends AppCompatActivity {
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         if (i == 0) {
                                             Intent intent = new Intent(CartActivity.this, ProductDetailActivity.class);
-                                            intent.putExtra("prodID", cart.getProdID());
+                                            Bundle b = new Bundle();
+                                            b.putString("prodID", cart.getProdID());
+                                            b.putString("branchID", branchID);
+                                            intent.putExtra("personBdl", b);
                                             startActivity(intent);
 
                                         } else if (i == 1) {
@@ -142,4 +151,5 @@ public class CartActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
         adapter.startListening();
     }
+
 }

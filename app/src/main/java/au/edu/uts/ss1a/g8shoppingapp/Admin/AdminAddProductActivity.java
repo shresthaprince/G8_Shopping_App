@@ -1,4 +1,4 @@
-package au.edu.uts.ss1a.g8shoppingapp;
+package au.edu.uts.ss1a.g8shoppingapp.Admin;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -29,6 +29,8 @@ import com.google.firebase.storage.UploadTask;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+
+import au.edu.uts.ss1a.g8shoppingapp.R;
 
 @SuppressWarnings("deprecation")
 public class AdminAddProductActivity extends AppCompatActivity {

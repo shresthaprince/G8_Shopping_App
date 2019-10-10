@@ -4,34 +4,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/login_bg"
-    tools:context=".Customer.RegisterActivity">
+    tools:context=".Admin.AdminRegisterBranchActivity">
 
     <Button
-        android:id="@+id/register_btn"
+        android:id="@+id/admin_branch_register_btn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/register_password_input"
+        android:layout_below="@id/admin_branch_register_password_input"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="5dp"
         android:layout_marginRight="15dp"
         android:background="@drawable/buttons"
         android:padding="17dp"
-        android:text="Create Account"
+        android:text="Add Branch"
         android:textAllCaps="false"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
 
     <EditText
-        android:id="@+id/register_phnumber_input"
+        android:id="@+id/admin_branch_id_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/register_name_input"
+        android:layout_below="@+id/admin_branch_register_name_input"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="6dp"
         android:layout_marginRight="15dp"
         android:background="@drawable/input_design"
-        android:hint="Phone Number"
+        android:hint="Branch ID"
         android:inputType="number"
         android:padding="20dp"
         android:textColor="@color/colorPrimaryDark"
@@ -40,10 +39,10 @@
         android:textStyle="bold"></EditText>
 
     <EditText
-        android:id="@+id/register_password_input"
+        android:id="@+id/admin_branch_register_password_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/register_phnumber_input"
+        android:layout_below="@+id/admin_branch_id_input"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="6dp"
         android:layout_marginRight="15dp"
@@ -57,27 +56,41 @@
         android:textStyle="bold"></EditText>
 
     <EditText
-        android:id="@+id/register_name_input"
+        android:id="@+id/admin_branch_register_name_input"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/register_app_logo"
+        android:layout_below="@+id/select_branch_image"
+        android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
         android:background="@drawable/input_design"
-        android:hint="Name"
-        android:inputType="textPersonName"
+        android:hint="Branch Name"
         android:padding="20dp"
         android:textColor="@color/colorPrimaryDark"
         android:textColorHint="@color/colorPrimaryDark"
         android:textSize="17sp"
         android:textStyle="bold"></EditText>
 
+    <TextView
+        android:id="@+id/admin_branch_textview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Add New Branch Details"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@color/colorPrimaryDark" />
+
     <ImageView
-        android:id="@+id/register_app_logo"
-        android:layout_width="300dp"
-        android:layout_height="100dp"
+        android:id="@+id/select_branch_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp"
-        android:src="@drawable/logo" />
+        android:layout_below="@id/admin_branch_textview"
+        android:cropToPadding="false"
+        android:src="@drawable/addbranch"
+        android:scaleType="centerCrop" />
+
 
 </RelativeLayout>

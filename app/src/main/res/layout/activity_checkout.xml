@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CheckoutActivity">
+    tools:context=".Customer.CheckoutActivity">
 
     <Button
         android:id="@+id/checkout_btn"
@@ -15,6 +15,7 @@
         android:background="@drawable/buttons"
         android:text="Confirm"
         android:textColor="@android:color/white"
+        android:textAllCaps="false"
         android:textSize="20sp" />
 
     <EditText
@@ -23,7 +24,6 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkout_text"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
         android:layout_marginRight="20dp"
         android:hint="Name" />
 
@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkout_name"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:hint="Contact Number"
         android:inputType="number" />
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkout_phnumber"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="20dp"
         android:hint="Street/Unit No." />
 
@@ -54,7 +54,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkout_address_street"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:hint="City" />
 
@@ -64,7 +64,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/checkout_address_city"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:hint="Postcode"
         android:inputType="number" />
@@ -96,6 +96,8 @@
         android:layout_below="@+id/checkout_address_postcode"
         android:layout_marginLeft="25dp"
         android:layout_marginTop="20dp"
+        android:textSize="15sp"
+        android:textStyle="bold"
         android:text="Payment Method" />
 
     <LinearLayout
@@ -107,13 +109,13 @@
 
 
         <CheckBox
-            android:id="@+id/checkBox1"
+            android:id="@+id/debit_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Debit Card" />
 
         <CheckBox
-            android:id="@+id/checkBox2"
+            android:id="@+id/credit_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Credit Card" />
@@ -125,7 +127,7 @@
         android:id="@+id/checkout_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="25dp"
+        android:layout_margin="20dp"
         android:text="Checkout"
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
@@ -137,8 +139,10 @@
         android:id="@+id/checkout_total_price"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_above="@+id/checkout_btn"
-        android:layout_margin="15dp"
+        android:layout_below="@+id/checkout_payment_cvv"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/round_rectangle"
         android:gravity="center"
         android:text="Total Price: "

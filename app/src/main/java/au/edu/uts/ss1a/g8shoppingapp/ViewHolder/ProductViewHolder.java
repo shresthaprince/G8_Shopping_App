@@ -13,7 +13,7 @@ import au.edu.uts.ss1a.g8shoppingapp.Interface.ItemClickListener;
 import au.edu.uts.ss1a.g8shoppingapp.R;
 
 public class ProductViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
-    public TextView textProductName, textProductDesc, textProductPrice;
+    public TextView textProductName, textProductDesc, textProductPrice, textProductStock;
     public ImageView imageView;
     public ItemClickListener itemClickListener;
 
@@ -25,6 +25,7 @@ public class ProductViewHolder extends RecyclerView.ViewHolder implements OnClic
         textProductName = (TextView) context.findViewById(R.id.product_name);
         textProductDesc = (TextView) context.findViewById(R.id.product_description);
         textProductPrice = (TextView) context.findViewById(R.id.product_price);
+        textProductStock = (TextView) context.findViewById(R.id.product_stock);
 
     }
 

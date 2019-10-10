@@ -1,4 +1,4 @@
-package au.edu.uts.ss1a.g8shoppingapp;
+package au.edu.uts.ss1a.g8shoppingapp.Customer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -16,12 +16,12 @@ import android.widget.TextView;
 
 import com.google.android.material.navigation.NavigationView;
 
+import au.edu.uts.ss1a.g8shoppingapp.Admin.AdminUserProductsActivity;
 import au.edu.uts.ss1a.g8shoppingapp.CurrentModel.CurrentModel;
+import au.edu.uts.ss1a.g8shoppingapp.R;
 import au.edu.uts.ss1a.g8shoppingapp.ui.BranchFragment;
 import au.edu.uts.ss1a.g8shoppingapp.ui.CategoryFragment;
 import au.edu.uts.ss1a.g8shoppingapp.ui.HomeFragment;
-import au.edu.uts.ss1a.g8shoppingapp.ui.OrdersFragment;
-import au.edu.uts.ss1a.g8shoppingapp.ui.WhatsNewFragment;
 import io.paperdb.Paper;
 
 public class UserHomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
@@ -67,29 +67,23 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new HomeFragment()).commit();
                 break;
-            case R.id.nav_whats_new:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new WhatsNewFragment()).commit();
-                break;
-            case R.id.nav_all_products:
-                Intent intent = new Intent(UserHomeActivity.this, AllProductsActivity.class);
-                startActivity(intent);
-                break;
+
             case R.id.nav_category:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new CategoryFragment()).commit();
                 break;
             case R.id.nav_branch:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new BranchFragment()).commit();
+                Intent intent = new Intent(UserHomeActivity.this, BranchProductsActivity.class);
+                startActivity(intent);
                 break;
             case R.id.nav_cart:
                 intent = new Intent(UserHomeActivity.this, CartActivity.class);
                 startActivity(intent);
                 break;
             case R.id.nav_orders:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new OrdersFragment()).commit();
+                intent = new Intent(UserHomeActivity.this, AdminUserProductsActivity.class);
+                intent.putExtra("User ID", CurrentModel.currentUser.getPhonenumber());
+                startActivity(intent);
                 break;
             case R.id.nav_settings:
                 intent = new Intent(UserHomeActivity.this, SettingsActivity.class);

@@ -1,4 +1,4 @@
-package au.edu.uts.ss1a.g8shoppingapp;
+package au.edu.uts.ss1a.g8shoppingapp.Customer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,7 +23,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 import au.edu.uts.ss1a.g8shoppingapp.CurrentModel.CurrentModel;
-import au.edu.uts.ss1a.g8shoppingapp.ui.HomeFragment;
+import au.edu.uts.ss1a.g8shoppingapp.R;
 
 public class CheckoutActivity extends AppCompatActivity {
 
@@ -30,6 +31,7 @@ public class CheckoutActivity extends AppCompatActivity {
     private Button checkoutBtn;
     private TextView totalPriceTxt;
 
+    CheckBox debitCardCBox, creditCardCBox;
 
     private String totalPrice = "";
 
@@ -104,7 +106,7 @@ public class CheckoutActivity extends AppCompatActivity {
         ordersMap.put("userAddressPostcode", addressPostcodeEditText.getText().toString());
         ordersMap.put("date", saveCurrentDate);
         ordersMap.put("time", saveCurrentTime);
-        ordersMap.put("tracker", "Not Shipped");
+        ordersMap.put("totalPrice", "Not Shipped");
 
         ordersRef.updateChildren(ordersMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

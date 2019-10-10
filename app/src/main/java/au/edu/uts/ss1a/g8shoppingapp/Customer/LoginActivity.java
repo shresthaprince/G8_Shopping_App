@@ -1,4 +1,4 @@
-package au.edu.uts.ss1a.g8shoppingapp;
+package au.edu.uts.ss1a.g8shoppingapp.Customer;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,8 +20,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import au.edu.uts.ss1a.g8shoppingapp.Admin.AdminCategoryActivity;
+import au.edu.uts.ss1a.g8shoppingapp.Branches.BranchesHomeActivity;
 import au.edu.uts.ss1a.g8shoppingapp.CurrentModel.CurrentModel;
 import au.edu.uts.ss1a.g8shoppingapp.Model.Customers;
+import au.edu.uts.ss1a.g8shoppingapp.R;
 import io.paperdb.Paper;
 
 @SuppressWarnings("deprecation")
@@ -30,6 +34,7 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginBtn;
     private TextView AdminPageLink, BranchPageLink, UserPageLink1, UserPageLink2;
     private ProgressDialog dialogBox;
+    private CheckBox rememberMeCBox;
 
     String parentDbName = "Customers";
 
@@ -45,6 +50,7 @@ public class LoginActivity extends AppCompatActivity {
         BranchPageLink = (TextView) findViewById(R.id.branch_page_link);
         UserPageLink1 = (TextView) findViewById(R.id.user_page_link1);
         UserPageLink2 = (TextView) findViewById(R.id.user_page_link2);
+        rememberMeCBox = (CheckBox) findViewById(R.id.remember_me_checkbox);
         dialogBox = new ProgressDialog(this);
 
         Paper.init(this);
@@ -64,6 +70,8 @@ public class LoginActivity extends AppCompatActivity {
                 UserPageLink2.setVisibility(View.VISIBLE);
                 UserPageLink1.setVisibility(View.INVISIBLE);
                 BranchPageLink.setVisibility(View.VISIBLE);
+                rememberMeCBox.setVisibility(View.INVISIBLE);
+                rememberMeCBox.setChecked(false);
                 parentDbName = "Administrators";
             }
         });
@@ -76,6 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                 AdminPageLink.setVisibility(View.VISIBLE);
                 UserPageLink1.setVisibility(View.INVISIBLE);
                 BranchPageLink.setVisibility(View.VISIBLE);
+                rememberMeCBox.setVisibility(View.VISIBLE);
                 parentDbName = "Customers";
             }
         });
@@ -87,6 +96,8 @@ public class LoginActivity extends AppCompatActivity {
                 UserPageLink1.setVisibility(View.VISIBLE);
                 AdminPageLink.setVisibility(View.VISIBLE);
                 UserPageLink2.setVisibility(View.INVISIBLE);
+                rememberMeCBox.setVisibility(View.INVISIBLE);
+                rememberMeCBox.setChecked(false);
                 parentDbName = "Branches";
             }
         });
@@ -99,6 +110,7 @@ public class LoginActivity extends AppCompatActivity {
                 BranchPageLink.setVisibility(View.VISIBLE);
                 AdminPageLink.setVisibility(View.VISIBLE);
                 UserPageLink2.setVisibility(View.INVISIBLE);
+                rememberMeCBox.setVisibility(View.VISIBLE);
                 parentDbName = "Customers";
             }
         });
@@ -117,15 +129,18 @@ public class LoginActivity extends AppCompatActivity {
             dialogBox.setMessage("Checking info");
             dialogBox.setCanceledOnTouchOutside(false);
             dialogBox.show();
-
             login(phnumber, password);
         }
     }
 
     private void login(final String phnumber, final String password) {
 
-        Paper.book().write(CurrentModel.userPhoneNumber, phnumber);
-        Paper.book().write(CurrentModel.userPassword, password);
+
+        if (rememberMeCBox.isChecked()) {
+            Paper.book().write(CurrentModel.userPhoneNumber, phnumber);
+            Paper.book().write(CurrentModel.userPassword, password);
+        }
+
         final DatabaseReference RootRef;
         RootRef = FirebaseDatabase.getInstance().getReference();
 
@@ -137,18 +152,27 @@ public class LoginActivity extends AppCompatActivity {
 
                     if (userData.getPhonenumber().equals(phnumber)) {
                         if (userData.getPassword().equals(password)) {
-                            if (parentDbName.equals("Administrators")){
+                            if (parentDbName.equals("Administrators")) {
                                 Toast.makeText(LoginActivity.this, "Welcome God", Toast.LENGTH_SHORT).show();
                                 dialogBox.dismiss();
 
                                 Intent intent = new Intent(LoginActivity.this, AdminCategoryActivity.class);
                                 startActivity(intent);
-                            } else if (parentDbName.equals("Customers")){
+                            } else if (parentDbName.equals("Customers")) {
                                 Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                 dialogBox.dismiss();
 
                                 Intent intent = new Intent(LoginActivity.this, UserHomeActivity.class);
                                 CurrentModel.currentUser = userData;
+                                startActivity(intent);
+
+                            } else if (parentDbName.equals("Branches")) {
+                                Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                CurrentModel.currentUser = userData;
+                                dialogBox.dismiss();
+
+
+                                Intent intent = new Intent(LoginActivity.this, BranchesHomeActivity.class);
                                 startActivity(intent);
                             }
                         } else {
@@ -163,7 +187,9 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Number does not exist", Toast.LENGTH_SHORT).show();
                     dialogBox.dismiss();
                 }
+
             }
+
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {

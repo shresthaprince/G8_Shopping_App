@@ -6,24 +6,18 @@
 
         <item
             android:id="@+id/nav_home"
-            android:icon="@color/colorPrimary"
+            android:icon="@drawable/home"
             android:title="Home" />
-        <item
-            android:id="@+id/nav_whats_new"
-            android:icon="@drawable/whats_new"
-            android:title="What's New?" />
-        <item
-            android:id="@+id/nav_all_products"
-            android:icon="@drawable/whats_new"
-            android:title="All Products" />
+
+
         <item
             android:id="@+id/nav_category"
             android:icon="@drawable/category"
-            android:title="Category" />
+            android:title="Shop By Category" />
         <item
             android:id="@+id/nav_branch"
             android:icon="@drawable/branch"
-            android:title="Branch" />
+            android:title="Shop By Branch" />
         <item
             android:id="@+id/nav_cart"
             android:icon="@drawable/cart"

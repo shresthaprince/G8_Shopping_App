@@ -1,4 +1,4 @@
-package au.edu.uts.ss1a.g8shoppingapp;
+package au.edu.uts.ss1a.g8shoppingapp.Admin;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -8,10 +8,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import au.edu.uts.ss1a.g8shoppingapp.Branches.BranchesHomeActivity;
+import au.edu.uts.ss1a.g8shoppingapp.Customer.LoginActivity;
+import au.edu.uts.ss1a.g8shoppingapp.R;
+import au.edu.uts.ss1a.g8shoppingapp.Customer.SearchProductsActivity;
+
 public class AdminCategoryActivity extends AppCompatActivity {
 
     private ImageView pc, laptop, phone, usb, console, headphones, router, tablet;
-    private Button checkOrderBtn, logoutBtn;
+    private Button checkOrderBtn, logoutBtn, manageProductsBtn, manageBranchesBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +25,8 @@ public class AdminCategoryActivity extends AppCompatActivity {
 
         logoutBtn = (Button) findViewById(R.id.admin_logout_btn);
         checkOrderBtn = (Button) findViewById(R.id.admin_check_order_btn);
+        manageProductsBtn = (Button) findViewById(R.id.admin_manage_products);
+        manageBranchesBtn = (Button) findViewById(R.id.admin_manage_branches);
 
         pc = (ImageView) findViewById(R.id.pc);
         laptop = (ImageView) findViewById(R.id.laptop);
@@ -115,6 +122,25 @@ public class AdminCategoryActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(AdminCategoryActivity.this, LoginActivity.class);
                 intent.addFlags(intent.FLAG_ACTIVITY_CLEAR_TASK | intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        manageProductsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AdminCategoryActivity.this, SearchProductsActivity.class);
+                intent.putExtra("Admin", "Admin");
+                startActivity(intent);
+                finish();
+            }
+        });
+
+        manageBranchesBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AdminCategoryActivity.this, AdminManageBranchesActivity.class);
                 startActivity(intent);
                 finish();
             }

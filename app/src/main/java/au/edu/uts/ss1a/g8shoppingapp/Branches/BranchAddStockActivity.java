@@ -1,12 +1,12 @@
-package au.edu.uts.ss1a.g8shoppingapp;
+package au.edu.uts.ss1a.g8shoppingapp.Branches;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.CalendarContract;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,37 +27,41 @@ import java.util.Calendar;
 import java.util.HashMap;
 
 import au.edu.uts.ss1a.g8shoppingapp.CurrentModel.CurrentModel;
+import au.edu.uts.ss1a.g8shoppingapp.Customer.CartActivity;
+import au.edu.uts.ss1a.g8shoppingapp.Customer.ProductDetailActivity;
 import au.edu.uts.ss1a.g8shoppingapp.Model.Products;
+import au.edu.uts.ss1a.g8shoppingapp.R;
 
-public class ProductDetailActivity extends AppCompatActivity {
+public class BranchAddStockActivity extends AppCompatActivity {
 
-    private FloatingActionButton cartBtn;
+    private FloatingActionButton addBtn;
     private ImageView productImage;
-    private ElegantNumberButton stockCounter;
+    private EditText stock;
     private TextView productName, productDesc, productPrice;
-    private String productID = "";
+    private String productID = "", imageLink;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product_detail);
+        setContentView(R.layout.activity_branch_add_stock);
+
+        addBtn = (FloatingActionButton) findViewById(R.id.branch_add_btn);
 
         productID = getIntent().getStringExtra("prodID");
 
-        cartBtn = (FloatingActionButton) findViewById(R.id.cart_btn);
-        stockCounter = (ElegantNumberButton) findViewById(R.id.product_details_counter);
+        stock = (EditText) findViewById(R.id.branch_product_stock);
 
-        productImage = (ImageView) findViewById(R.id.product_details_image);
-        productName = (TextView) findViewById(R.id.product_details_name);
-        productDesc = (TextView) findViewById(R.id.product_details_desc);
-        productPrice = (TextView) findViewById(R.id.product_details_price);
+        productImage = (ImageView) findViewById(R.id.branch_product_image);
+        productName = (TextView) findViewById(R.id.branch_product_name);
+        productDesc = (TextView) findViewById(R.id.branch_product_desc);
+        productPrice = (TextView) findViewById(R.id.branch_product_price);
 
         getProductDetails();
 
-        cartBtn.setOnClickListener(new View.OnClickListener() {
+        addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addProductToCart();
+                addProductToBranch();
             }
         });
     }
@@ -75,6 +79,8 @@ public class ProductDetailActivity extends AppCompatActivity {
                     productDesc.setText(products.getDescription());
                     productPrice.setText(products.getPrice());
                     Picasso.get().load(products.getImage()).into(productImage);
+
+                    imageLink = products.getImage();
                 }
             }
 
@@ -85,7 +91,7 @@ public class ProductDetailActivity extends AppCompatActivity {
         });
     }
 
-    private void addProductToCart() {
+    private void addProductToBranch() {
         String saveCurrentTime, saveCurrentDate;
 
         Calendar calDate = Calendar.getInstance();
@@ -95,33 +101,31 @@ public class ProductDetailActivity extends AppCompatActivity {
         SimpleDateFormat currentTime = new SimpleDateFormat("HH:mm:ss a");
         saveCurrentTime = currentTime.format(calDate.getTime());
 
-        final DatabaseReference cartListReference = FirebaseDatabase.getInstance().getReference().child("CartList");
+        final DatabaseReference branchListReference = FirebaseDatabase.getInstance().getReference().child("Branches");
 
-        final HashMap<String, Object> cartMap = new HashMap<>();
-        cartMap.put("prodID", productID);
-        cartMap.put("prodName", productName.getText().toString());
-        cartMap.put("prodPrice", productPrice.getText().toString());
-        cartMap.put("prodDesc", productDesc.getText().toString());
-        cartMap.put("prodTime", saveCurrentTime);
-        cartMap.put("prodDate", saveCurrentDate);
-        cartMap.put("prodQuantity", stockCounter.getNumber());
+        final HashMap<String, Object> branchMap = new HashMap<>();
+        branchMap.put("prodID", productID);
+        branchMap.put("prodName", productName.getText().toString());
+        branchMap.put("prodPrice", productPrice.getText().toString());
+        branchMap.put("prodDesc", productDesc.getText().toString());
+        branchMap.put("prodTime", saveCurrentTime);
+        branchMap.put("prodDate", saveCurrentDate);
+        branchMap.put("prodStock", stock.getText().toString());
+        branchMap.put("image", imageLink);
 
-        cartListReference.child("User View").child(CurrentModel.currentUser.getPhonenumber()).child("Products").child(productID).updateChildren(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+        branchListReference.child(CurrentModel.currentUser.getPhonenumber()).child("Products").child(productID).updateChildren(branchMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
-                    cartListReference.child("Admin View").child(CurrentModel.currentUser.getPhonenumber()).child("Products").child(productID).updateChildren(cartMap).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(ProductDetailActivity.this, "Added to Cart", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(ProductDetailActivity.this, CartActivity.class);
-                                startActivity(intent);
-                            }
-                        }
-                    });
+
+                    Toast.makeText(BranchAddStockActivity.this, "Added to Branch", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(BranchAddStockActivity.this, BranchAddProductActivity.class);
+                    startActivity(intent);
+
                 }
+
             }
+
         });
     }
 }

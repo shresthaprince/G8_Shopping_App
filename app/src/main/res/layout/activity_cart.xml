@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CartActivity">
+    tools:context=".Customer.CartActivity">
 
     <Button
         android:id="@+id/next_cart_btn"
@@ -15,7 +15,8 @@
         android:background="@drawable/buttons"
         android:text="Checkout"
         android:textColor="@android:color/white"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        android:textAllCaps="false" />
 
     <RelativeLayout
         android:id="@+id/rl_cartactivity"
