@@ -20,6 +20,10 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+
 import au.edu.uts.ss1a.g8shoppingapp.Admin.AdminCategoryActivity;
 import au.edu.uts.ss1a.g8shoppingapp.Branches.BranchesHomeActivity;
 import au.edu.uts.ss1a.g8shoppingapp.CurrentModel.CurrentModel;
@@ -151,7 +155,7 @@ public class LoginActivity extends AppCompatActivity {
                     Customers userData = dataSnapshot.child(parentDbName).child(phnumber).getValue(Customers.class);
 
                     if (userData.getPhonenumber().equals(phnumber)) {
-                        if (userData.getPassword().equals(password)) {
+                        if (userData.getPassword().equals(getMd5(password))) {
                             if (parentDbName.equals("Administrators")) {
                                 Toast.makeText(LoginActivity.this, "Welcome God", Toast.LENGTH_SHORT).show();
                                 dialogBox.dismiss();
@@ -196,5 +200,32 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public static String getMd5(String input) {
+        try {
+
+            // Static getInstance method is called with hashing MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            // digest() method is called to calculate message digest
+            //  of an input digest() return array of byte
+            byte[] messageDigest = md.digest(input.getBytes());
+
+            // Convert byte array into signum representation
+            BigInteger no = new BigInteger(1, messageDigest);
+
+            // Convert message digest into hex value
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        }
+
+        // For specifying wrong message digest algorithms
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

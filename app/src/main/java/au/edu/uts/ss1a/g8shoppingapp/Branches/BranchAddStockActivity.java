@@ -38,7 +38,7 @@ public class BranchAddStockActivity extends AppCompatActivity {
     private ImageView productImage;
     private EditText stock;
     private TextView productName, productDesc, productPrice;
-    private String productID = "", imageLink;
+    private String productID = "", imageLink, productCategory;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +78,7 @@ public class BranchAddStockActivity extends AppCompatActivity {
                     productName.setText(products.getName());
                     productDesc.setText(products.getDescription());
                     productPrice.setText(products.getPrice());
+                    productCategory = products.getCategory();
                     Picasso.get().load(products.getImage()).into(productImage);
 
                     imageLink = products.getImage();
@@ -112,6 +113,7 @@ public class BranchAddStockActivity extends AppCompatActivity {
         branchMap.put("prodDate", saveCurrentDate);
         branchMap.put("prodStock", stock.getText().toString());
         branchMap.put("image", imageLink);
+        branchMap.put("category", productCategory);
 
         branchListReference.child(CurrentModel.currentUser.getPhonenumber()).child("Products").child(productID).updateChildren(branchMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override

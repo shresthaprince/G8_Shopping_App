@@ -20,6 +20,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 import au.edu.uts.ss1a.g8shoppingapp.R;
@@ -85,7 +88,7 @@ public class RegisterActivity extends AppCompatActivity {
                     HashMap<String, Object> userDataMap = new HashMap<>();
                     userDataMap.put("phonenumber", phnumber);
                     userDataMap.put("name", name);
-                    userDataMap.put("password", password);
+                    userDataMap.put("password", getMd5(password));
 
                     RootRef.child("Customers").child(phnumber).updateChildren(userDataMap)
                             .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -118,5 +121,32 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public static String getMd5(String input) {
+        try {
+
+            // Static getInstance method is called with hashing MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            // digest() method is called to calculate message digest
+            //  of an input digest() return array of byte
+            byte[] messageDigest = md.digest(input.getBytes());
+
+            // Convert byte array into signum representation
+            BigInteger no = new BigInteger(1, messageDigest);
+
+            // Convert message digest into hex value
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        }
+
+        // For specifying wrong message digest algorithms
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

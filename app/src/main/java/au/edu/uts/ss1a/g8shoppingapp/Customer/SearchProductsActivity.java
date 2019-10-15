@@ -10,8 +10,12 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
@@ -26,13 +30,15 @@ import au.edu.uts.ss1a.g8shoppingapp.Model.Products;
 import au.edu.uts.ss1a.g8shoppingapp.R;
 import au.edu.uts.ss1a.g8shoppingapp.ViewHolder.ProductViewHolder;
 
-public class SearchProductsActivity extends AppCompatActivity {
+public class SearchProductsActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    String[] category = {"", "Computers", "Laptops", "Smartphones", "Headphones", "Accessories"};
 
     private Button searchBtn;
     private FloatingActionButton homeBtn;
     private RecyclerView recyclerView;
     private EditText searchName;
-    private String inputText, type = "", branchID;
+    private String inputText, inputCategory, type = "", branchID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +65,7 @@ public class SearchProductsActivity extends AppCompatActivity {
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 inputText = searchName.getText().toString();
                 onStart();
             }
@@ -78,6 +85,27 @@ public class SearchProductsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        Spinner spin = (Spinner) findViewById(R.id.spinner1);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, category);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spin.setAdapter(adapter);
+        spin.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> arg0, View arg1, int position, long id) {
+        inputCategory = category[position];
+        Toast.makeText(getApplicationContext(), "Selected Category: " + inputCategory, Toast.LENGTH_SHORT).show();
+
+        onStart();
+
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> arg0) {
+
     }
 
     @Override
@@ -85,11 +113,20 @@ public class SearchProductsActivity extends AppCompatActivity {
         super.onStart();
 
         DatabaseReference productsRef = FirebaseDatabase.getInstance().getReference().child("Branches").child(branchID).child("Products");
+        FirebaseRecyclerOptions<Products> options;
 
-        FirebaseRecyclerOptions<Products> options =
+        FirebaseRecyclerOptions<Products> options1 =
                 new FirebaseRecyclerOptions.Builder<Products>()
-                        .setQuery(productsRef.orderByChild("name").startAt(inputText), Products.class)
+                        .setQuery(productsRef.orderByChild("prodName").startAt(inputText), Products.class)
                         .build();
+        FirebaseRecyclerOptions<Products> options2 =
+                new FirebaseRecyclerOptions.Builder<Products>()
+                        .setQuery(productsRef.orderByChild("category").equalTo(inputCategory), Products.class)
+                        .build();
+
+        options = options2;
+        if (inputCategory == "") options = options1;
+
 
         FirebaseRecyclerAdapter<Products, ProductViewHolder> adapter =
                 new FirebaseRecyclerAdapter<Products, ProductViewHolder>(options) {
@@ -124,6 +161,7 @@ public class SearchProductsActivity extends AppCompatActivity {
                             }
                         });
 
+
                     }
 
                     @NonNull
@@ -137,5 +175,10 @@ public class SearchProductsActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
         adapter.startListening();
+
+
     }
+
+
 }
+

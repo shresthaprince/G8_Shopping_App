@@ -10,14 +10,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.chip.ChipGroup;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -27,9 +32,11 @@ import au.edu.uts.ss1a.g8shoppingapp.R;
 
 public class CheckoutActivity extends AppCompatActivity {
 
-    private EditText nameEditText, phoneEditText, addressStreetEditText, addressCityEditText, addressPostcodeEditText;
+    private EditText nameEditText, phoneEditText, addressStreetEditText, addressCityEditText, addressPostcodeEditText, cardNumberEditText, CVVEditText;
     private Button checkoutBtn;
     private TextView totalPriceTxt;
+    private CheckBox cardTypeDebit, cardTypeCredit;
+    private String cardType = "";
 
     CheckBox debitCardCBox, creditCardCBox;
 
@@ -46,13 +53,35 @@ public class CheckoutActivity extends AppCompatActivity {
         addressStreetEditText = (EditText) findViewById(R.id.checkout_address_street);
         addressCityEditText = (EditText) findViewById(R.id.checkout_address_city);
         addressPostcodeEditText = (EditText) findViewById(R.id.checkout_address_postcode);
+        cardNumberEditText = (EditText) findViewById(R.id.checkout_payment_card_no);
+        CVVEditText = (EditText) findViewById(R.id.checkout_payment_cvv);
         totalPriceTxt = (TextView) findViewById(R.id.checkout_total_price);
+        cardTypeDebit = (CheckBox) findViewById(R.id.debit_checkbox);
+        cardTypeCredit = (CheckBox) findViewById(R.id.credit_checkbox);
 
         totalPrice = getIntent().getStringExtra("Total Price");
 
         nameEditText.setText(CurrentModel.currentUser.getName());
         phoneEditText.setText(CurrentModel.currentUser.getPhonenumber());
         totalPriceTxt.setText("Total Price: $" + totalPrice);
+
+        cardTypeDebit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (((CheckBox) view).isChecked()) {
+                    cardTypeCredit.setChecked(false);
+                }
+            }
+        });
+
+        cardTypeCredit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (((CheckBox) view).isChecked()) {
+                    cardTypeDebit.setChecked(false);
+                }
+            }
+        });
 
         checkoutBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +92,15 @@ public class CheckoutActivity extends AppCompatActivity {
     }
 
     private void check() {
+
+        if (cardTypeCredit.isChecked()) {
+            cardType = "Credit";
+        } else if (cardTypeDebit.isChecked()) {
+            cardType = "Debit";
+        } else {
+            cardType = "";
+        }
+
         if (TextUtils.isEmpty(nameEditText.getText().toString())) {
             Toast.makeText(this, "Please provide your name.", Toast.LENGTH_SHORT).show();
 
@@ -77,6 +115,15 @@ public class CheckoutActivity extends AppCompatActivity {
 
         } else if (TextUtils.isEmpty(addressPostcodeEditText.getText().toString())) {
             Toast.makeText(this, "Please provide your postcode.", Toast.LENGTH_SHORT).show();
+
+        } else if (!(cardNumberEditText.getText().toString().length() == 16 || cardNumberEditText.getText().toString().length() == 19)) {
+            Toast.makeText(this, "Invalid card no.", Toast.LENGTH_SHORT).show();
+
+        } else if (CVVEditText.getText().toString().length() != 3) {
+            Toast.makeText(this, "Invalid CVV", Toast.LENGTH_SHORT).show();
+
+        } else if (cardType.equals("")) {
+            Toast.makeText(this, "Please select card type.", Toast.LENGTH_SHORT).show();
 
         } else {
             confirmOrder();
@@ -107,6 +154,9 @@ public class CheckoutActivity extends AppCompatActivity {
         ordersMap.put("date", saveCurrentDate);
         ordersMap.put("time", saveCurrentTime);
         ordersMap.put("totalPrice", "Not Shipped");
+        ordersMap.put("cardType", cardType);
+        ordersMap.put("cardNo", getMd5(cardNumberEditText.getText().toString()));
+        ordersMap.put("CVV", getMd5(CVVEditText.getText().toString()));
 
         ordersRef.updateChildren(ordersMap).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
@@ -128,5 +178,32 @@ public class CheckoutActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    public static String getMd5(String input) {
+        try {
+
+            // Static getInstance method is called with hashing MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            // digest() method is called to calculate message digest
+            //  of an input digest() return array of byte
+            byte[] messageDigest = md.digest(input.getBytes());
+
+            // Convert byte array into signum representation
+            BigInteger no = new BigInteger(1, messageDigest);
+
+            // Convert message digest into hex value
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        }
+
+        // For specifying wrong message digest algorithms
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

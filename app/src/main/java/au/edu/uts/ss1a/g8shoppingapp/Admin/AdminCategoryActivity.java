@@ -41,7 +41,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddProductActivity.class);
-                intent.putExtra("category", "pc");
+                intent.putExtra("category", "Computers");
                 startActivity(intent);
             }
         });
@@ -50,7 +50,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddProductActivity.class);
-                intent.putExtra("category", "laptop");
+                intent.putExtra("category", "Laptops");
                 startActivity(intent);
             }
         });
@@ -59,7 +59,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddProductActivity.class);
-                intent.putExtra("category", "phone");
+                intent.putExtra("category", "Smartphones");
                 startActivity(intent);
             }
         });
@@ -86,7 +86,7 @@ public class AdminCategoryActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(AdminCategoryActivity.this, AdminAddProductActivity.class);
-                intent.putExtra("category", "headphones");
+                intent.putExtra("category", "Headphones");
                 startActivity(intent);
             }
         });

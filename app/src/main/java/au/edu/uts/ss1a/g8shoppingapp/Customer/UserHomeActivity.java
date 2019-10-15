@@ -19,8 +19,6 @@ import com.google.android.material.navigation.NavigationView;
 import au.edu.uts.ss1a.g8shoppingapp.Admin.AdminUserProductsActivity;
 import au.edu.uts.ss1a.g8shoppingapp.CurrentModel.CurrentModel;
 import au.edu.uts.ss1a.g8shoppingapp.R;
-import au.edu.uts.ss1a.g8shoppingapp.ui.BranchFragment;
-import au.edu.uts.ss1a.g8shoppingapp.ui.CategoryFragment;
 import au.edu.uts.ss1a.g8shoppingapp.ui.HomeFragment;
 import io.paperdb.Paper;
 
@@ -68,10 +66,6 @@ public class UserHomeActivity extends AppCompatActivity implements NavigationVie
                         new HomeFragment()).commit();
                 break;
 
-            case R.id.nav_category:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new CategoryFragment()).commit();
-                break;
             case R.id.nav_branch:
                 Intent intent = new Intent(UserHomeActivity.this, BranchProductsActivity.class);
                 startActivity(intent);
