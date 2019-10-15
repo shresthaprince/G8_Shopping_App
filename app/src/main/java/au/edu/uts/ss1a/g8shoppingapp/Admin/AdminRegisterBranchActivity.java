@@ -29,6 +29,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 
 import au.edu.uts.ss1a.g8shoppingapp.Customer.LoginActivity;
@@ -150,7 +153,7 @@ public class AdminRegisterBranchActivity extends AppCompatActivity {
                     HashMap<String, Object> userDataMap = new HashMap<>();
                     userDataMap.put("phonenumber", idnumber);
                     userDataMap.put("name", name);
-                    userDataMap.put("password", password);
+                    userDataMap.put("password", getMd5(password));
                     userDataMap.put("image", image);
 
                     RootRef.child("Branches").child(idnumber).updateChildren(userDataMap)
@@ -199,6 +202,33 @@ public class AdminRegisterBranchActivity extends AppCompatActivity {
         if (requestCode == GalleryPick && resultCode == RESULT_OK && data != null) {
             imageUri = data.getData();
             inputBranchImage.setImageURI(imageUri);
+        }
+    }
+
+    public static String getMd5(String input) {
+        try {
+
+            // Static getInstance method is called with hashing MD5
+            MessageDigest md = MessageDigest.getInstance("MD5");
+
+            // digest() method is called to calculate message digest
+            //  of an input digest() return array of byte
+            byte[] messageDigest = md.digest(input.getBytes());
+
+            // Convert byte array into signum representation
+            BigInteger no = new BigInteger(1, messageDigest);
+
+            // Convert message digest into hex value
+            String hashtext = no.toString(16);
+            while (hashtext.length() < 32) {
+                hashtext = "0" + hashtext;
+            }
+            return hashtext;
+        }
+
+        // For specifying wrong message digest algorithms
+        catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
         }
     }
 }
